@@ -1,0 +1,1534 @@
+
+    
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter} % prevents tcolorboxes being placing in paragraphs
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{DA0101EN-Review-Introduction}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \newcommand{\prompt}[4]{
+        \llap{{\color{#2}[#3]: #4}}\vspace{-1.25em}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{verbatim}
+<a href="http://cocl.us/DA0101EN_NotbookLink_Top">
+     <img src="https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DA0101EN/Images/TopAd.png" width="750" align="center">
+</a>
+\end{verbatim}
+
+    Data Analysis with Python
+
+    Introduction
+
+Welcome!
+
+In this section, you will learn how to approach data acquisition in
+various ways, and obtain necessary insights from a dataset. By the end
+of this lab, you will successfully load the data into Jupyter Notebook,
+and gain some fundamental insights via Pandas Library.
+
+    Table of Contents
+
+Data Acquisition
+
+Basic Insight of Dataset
+
+Estimated Time Needed: 10 min
+
+    Data Acquisition
+
+There are various formats for a dataset, .csv, .json, .xlsx etc. The
+dataset can be stored in different places, on your local machine or
+sometimes online. In this section, you will learn how to load a dataset
+into our Jupyter Notebook. In our case, the Automobile Dataset is an
+online source, and it is in CSV (comma separated value) format. Let's
+use this dataset as an example to practice data reading.
+
+data source:
+https://archive.ics.uci.edu/ml/machine-learning-databases/autos/imports-85.data
+
+data type: csv
+
+The Pandas Library is a useful tool that enables us to read various
+datasets into a data frame; our Jupyter notebook platforms have a
+built-in Pandas Library so that all we need to do is import Pandas
+without installing.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{1}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} import pandas library}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+\end{Verbatim}
+\end{tcolorbox}
+
+    Read Data
+
+We use pandas.read\_csv() function to read the csv file. In the bracket,
+we put the file path along with a quotation mark, so that pandas will
+read the file into a data frame from that address. The file path can be
+either an URL or your local file address. Because the data does not
+include headers, we can add an argument headers = None inside the
+read\_csv() method, so that pandas will not automatically set the first
+row as a header. You can also assign the dataset to any variable you
+create.
+
+    This dataset was hosted on IBM Cloud object click HERE for free storage.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{2}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Import pandas library}
+\PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+
+\PY{c+c1}{\PYZsh{} Read the online file by the URL provides above, and assign it to variable \PYZdq{}df\PYZdq{}}
+\PY{n}{other\PYZus{}path} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{https://s3\PYZhy{}api.us\PYZhy{}geo.objectstorage.softlayer.net/cf\PYZhy{}courses\PYZhy{}data/CognitiveClass/DA0101EN/auto.csv}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{df} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{n}{other\PYZus{}path}\PY{p}{,} \PY{n}{header}\PY{o}{=}\PY{k+kc}{None}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    After reading the dataset, we can use the dataframe.head(n) method to
+check the top n rows of the dataframe; where n is an integer. Contrary
+to dataframe.head(n), dataframe.tail(n) will show you the bottom n rows
+of the dataframe.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{3}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} show the first 5 rows using dataframe.head() method}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{The first 5 rows of the dataframe}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} 
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The first 5 rows of the dataframe
+\end{Verbatim}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{3}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+   0    1            2    3    4     5            6    7      8     9   {\ldots}  \textbackslash{}
+0   3    ?  alfa-romero  gas  std   two  convertible  rwd  front  88.6  {\ldots}
+1   3    ?  alfa-romero  gas  std   two  convertible  rwd  front  88.6  {\ldots}
+2   1    ?  alfa-romero  gas  std   two    hatchback  rwd  front  94.5  {\ldots}
+3   2  164         audi  gas  std  four        sedan  fwd  front  99.8  {\ldots}
+4   2  164         audi  gas  std  four        sedan  4wd  front  99.4  {\ldots}
+
+    16    17    18    19    20   21    22  23  24     25
+0  130  mpfi  3.47  2.68   9.0  111  5000  21  27  13495
+1  130  mpfi  3.47  2.68   9.0  111  5000  21  27  16500
+2  152  mpfi  2.68  3.47   9.0  154  5000  19  26  16500
+3  109  mpfi  3.19  3.40  10.0  102  5500  24  30  13950
+4  136  mpfi  3.19  3.40   8.0  115  5500  18  22  17450
+
+[5 rows x 26 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Question \#1:
+
+check the bottom 10 rows of data frame ``df''.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Write your code below and press Shift+Enter to execute }
+
+\PY{n}{df}\PY{o}{.}\PY{n}{tail}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+     0    1      2       3      4     5      6    7      8      9   {\ldots}   16  \textbackslash{}
+195  -1   74  volvo     gas    std  four  wagon  rwd  front  104.3  {\ldots}  141
+196  -2  103  volvo     gas    std  four  sedan  rwd  front  104.3  {\ldots}  141
+197  -1   74  volvo     gas    std  four  wagon  rwd  front  104.3  {\ldots}  141
+198  -2  103  volvo     gas  turbo  four  sedan  rwd  front  104.3  {\ldots}  130
+199  -1   74  volvo     gas  turbo  four  wagon  rwd  front  104.3  {\ldots}  130
+200  -1   95  volvo     gas    std  four  sedan  rwd  front  109.1  {\ldots}  141
+201  -1   95  volvo     gas  turbo  four  sedan  rwd  front  109.1  {\ldots}  141
+202  -1   95  volvo     gas    std  four  sedan  rwd  front  109.1  {\ldots}  173
+203  -1   95  volvo  diesel  turbo  four  sedan  rwd  front  109.1  {\ldots}  145
+204  -1   95  volvo     gas  turbo  four  sedan  rwd  front  109.1  {\ldots}  141
+
+       17    18    19    20   21    22  23  24     25
+195  mpfi  3.78  3.15   9.5  114  5400  23  28  13415
+196  mpfi  3.78  3.15   9.5  114  5400  24  28  15985
+197  mpfi  3.78  3.15   9.5  114  5400  24  28  16515
+198  mpfi  3.62  3.15   7.5  162  5100  17  22  18420
+199  mpfi  3.62  3.15   7.5  162  5100  17  22  18950
+200  mpfi  3.78  3.15   9.5  114  5400  23  28  16845
+201  mpfi  3.78  3.15   8.7  160  5300  19  25  19045
+202  mpfi  3.58  2.87   8.8  134  5500  18  23  21485
+203   idi  3.01  3.40  23.0  106  4800  26  27  22470
+204  mpfi  3.78  3.15   9.5  114  5400  19  25  22625
+
+[10 rows x 26 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Question \#1 Answer:
+
+Run the code below for the solution!
+
+    Double-click here for the solution.
+
+    Add Headers
+
+Take a look at our dataset; pandas automatically set the header by an
+integer from 0.
+
+To better describe our data we can introduce a header, this information
+is available at: https://archive.ics.uci.edu/ml/datasets/Automobile
+
+Thus, we have to add headers manually.
+
+Firstly, we create a list ``headers'' that include all column names in
+order. Then, we use dataframe.columns = headers to replace the headers
+by the list we created.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{6}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} create headers list}
+\PY{n}{headers} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{symboling}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{normalized\PYZhy{}losses}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{make}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fuel\PYZhy{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{aspiration}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{num\PYZhy{}of\PYZhy{}doors}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{body\PYZhy{}style}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{drive\PYZhy{}wheels}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{engine\PYZhy{}location}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{wheel\PYZhy{}base}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{length}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{width}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{height}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{curb\PYZhy{}weight}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{engine\PYZhy{}type}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{num\PYZhy{}of\PYZhy{}cylinders}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{engine\PYZhy{}size}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{fuel\PYZhy{}system}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{bore}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stroke}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{compression\PYZhy{}ratio}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{horsepower}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+         \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{peak\PYZhy{}rpm}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{city\PYZhy{}mpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{highway\PYZhy{}mpg}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{headers}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{headers}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+headers
+ ['symboling', 'normalized-losses', 'make', 'fuel-type', 'aspiration', 'num-of-
+doors', 'body-style', 'drive-wheels', 'engine-location', 'wheel-base', 'length',
+'width', 'height', 'curb-weight', 'engine-type', 'num-of-cylinders', 'engine-
+size', 'fuel-system', 'bore', 'stroke', 'compression-ratio', 'horsepower',
+'peak-rpm', 'city-mpg', 'highway-mpg', 'price']
+\end{Verbatim}
+
+    We replace headers and recheck our data frame
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{7}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{columns} \PY{o}{=} \PY{n}{headers}
+\PY{n}{df}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{7}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+   symboling normalized-losses         make fuel-type aspiration num-of-doors  \textbackslash{}
+0          3                 ?  alfa-romero       gas        std          two
+1          3                 ?  alfa-romero       gas        std          two
+2          1                 ?  alfa-romero       gas        std          two
+3          2               164         audi       gas        std         four
+4          2               164         audi       gas        std         four
+5          2                 ?         audi       gas        std          two
+6          1               158         audi       gas        std         four
+7          1                 ?         audi       gas        std         four
+8          1               158         audi       gas      turbo         four
+9          0                 ?         audi       gas      turbo          two
+
+    body-style drive-wheels engine-location  wheel-base  {\ldots}  engine-size  \textbackslash{}
+0  convertible          rwd           front        88.6  {\ldots}          130
+1  convertible          rwd           front        88.6  {\ldots}          130
+2    hatchback          rwd           front        94.5  {\ldots}          152
+3        sedan          fwd           front        99.8  {\ldots}          109
+4        sedan          4wd           front        99.4  {\ldots}          136
+5        sedan          fwd           front        99.8  {\ldots}          136
+6        sedan          fwd           front       105.8  {\ldots}          136
+7        wagon          fwd           front       105.8  {\ldots}          136
+8        sedan          fwd           front       105.8  {\ldots}          131
+9    hatchback          4wd           front        99.5  {\ldots}          131
+
+   fuel-system  bore  stroke compression-ratio horsepower  peak-rpm city-mpg  \textbackslash{}
+0         mpfi  3.47    2.68               9.0        111      5000       21
+1         mpfi  3.47    2.68               9.0        111      5000       21
+2         mpfi  2.68    3.47               9.0        154      5000       19
+3         mpfi  3.19    3.40              10.0        102      5500       24
+4         mpfi  3.19    3.40               8.0        115      5500       18
+5         mpfi  3.19    3.40               8.5        110      5500       19
+6         mpfi  3.19    3.40               8.5        110      5500       19
+7         mpfi  3.19    3.40               8.5        110      5500       19
+8         mpfi  3.13    3.40               8.3        140      5500       17
+9         mpfi  3.13    3.40               7.0        160      5500       16
+
+  highway-mpg  price
+0          27  13495
+1          27  16500
+2          26  16500
+3          30  13950
+4          22  17450
+5          25  15250
+6          25  17710
+7          25  18920
+8          20  23875
+9          22      ?
+
+[10 rows x 26 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    we can drop missing values along the column ``price'' as follows
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{8}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{subset}\PY{o}{=}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{price}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{8}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+     symboling normalized-losses         make fuel-type aspiration  \textbackslash{}
+0            3                 ?  alfa-romero       gas        std
+1            3                 ?  alfa-romero       gas        std
+2            1                 ?  alfa-romero       gas        std
+3            2               164         audi       gas        std
+4            2               164         audi       gas        std
+5            2                 ?         audi       gas        std
+6            1               158         audi       gas        std
+7            1                 ?         audi       gas        std
+8            1               158         audi       gas      turbo
+9            0                 ?         audi       gas      turbo
+10           2               192          bmw       gas        std
+11           0               192          bmw       gas        std
+12           0               188          bmw       gas        std
+13           0               188          bmw       gas        std
+14           1                 ?          bmw       gas        std
+15           0                 ?          bmw       gas        std
+16           0                 ?          bmw       gas        std
+17           0                 ?          bmw       gas        std
+18           2               121    chevrolet       gas        std
+19           1                98    chevrolet       gas        std
+20           0                81    chevrolet       gas        std
+21           1               118        dodge       gas        std
+22           1               118        dodge       gas        std
+23           1               118        dodge       gas      turbo
+24           1               148        dodge       gas        std
+25           1               148        dodge       gas        std
+26           1               148        dodge       gas        std
+27           1               148        dodge       gas      turbo
+28          -1               110        dodge       gas        std
+29           3               145        dodge       gas      turbo
+..         {\ldots}               {\ldots}          {\ldots}       {\ldots}        {\ldots}
+175         -1                65       toyota       gas        std
+176         -1                65       toyota       gas        std
+177         -1                65       toyota       gas        std
+178          3               197       toyota       gas        std
+179          3               197       toyota       gas        std
+180         -1                90       toyota       gas        std
+181         -1                 ?       toyota       gas        std
+182          2               122   volkswagen    diesel        std
+183          2               122   volkswagen       gas        std
+184          2                94   volkswagen    diesel        std
+185          2                94   volkswagen       gas        std
+186          2                94   volkswagen       gas        std
+187          2                94   volkswagen    diesel      turbo
+188          2                94   volkswagen       gas        std
+189          3                 ?   volkswagen       gas        std
+190          3               256   volkswagen       gas        std
+191          0                 ?   volkswagen       gas        std
+192          0                 ?   volkswagen    diesel      turbo
+193          0                 ?   volkswagen       gas        std
+194         -2               103        volvo       gas        std
+195         -1                74        volvo       gas        std
+196         -2               103        volvo       gas        std
+197         -1                74        volvo       gas        std
+198         -2               103        volvo       gas      turbo
+199         -1                74        volvo       gas      turbo
+200         -1                95        volvo       gas        std
+201         -1                95        volvo       gas      turbo
+202         -1                95        volvo       gas        std
+203         -1                95        volvo    diesel      turbo
+204         -1                95        volvo       gas      turbo
+
+    num-of-doors   body-style drive-wheels engine-location  wheel-base  {\ldots}  \textbackslash{}
+0            two  convertible          rwd           front        88.6  {\ldots}
+1            two  convertible          rwd           front        88.6  {\ldots}
+2            two    hatchback          rwd           front        94.5  {\ldots}
+3           four        sedan          fwd           front        99.8  {\ldots}
+4           four        sedan          4wd           front        99.4  {\ldots}
+5            two        sedan          fwd           front        99.8  {\ldots}
+6           four        sedan          fwd           front       105.8  {\ldots}
+7           four        wagon          fwd           front       105.8  {\ldots}
+8           four        sedan          fwd           front       105.8  {\ldots}
+9            two    hatchback          4wd           front        99.5  {\ldots}
+10           two        sedan          rwd           front       101.2  {\ldots}
+11          four        sedan          rwd           front       101.2  {\ldots}
+12           two        sedan          rwd           front       101.2  {\ldots}
+13          four        sedan          rwd           front       101.2  {\ldots}
+14          four        sedan          rwd           front       103.5  {\ldots}
+15          four        sedan          rwd           front       103.5  {\ldots}
+16           two        sedan          rwd           front       103.5  {\ldots}
+17          four        sedan          rwd           front       110.0  {\ldots}
+18           two    hatchback          fwd           front        88.4  {\ldots}
+19           two    hatchback          fwd           front        94.5  {\ldots}
+20          four        sedan          fwd           front        94.5  {\ldots}
+21           two    hatchback          fwd           front        93.7  {\ldots}
+22           two    hatchback          fwd           front        93.7  {\ldots}
+23           two    hatchback          fwd           front        93.7  {\ldots}
+24          four    hatchback          fwd           front        93.7  {\ldots}
+25          four        sedan          fwd           front        93.7  {\ldots}
+26          four        sedan          fwd           front        93.7  {\ldots}
+27             ?        sedan          fwd           front        93.7  {\ldots}
+28          four        wagon          fwd           front       103.3  {\ldots}
+29           two    hatchback          fwd           front        95.9  {\ldots}
+..           {\ldots}          {\ldots}          {\ldots}             {\ldots}         {\ldots}  {\ldots}
+175         four    hatchback          fwd           front       102.4  {\ldots}
+176         four        sedan          fwd           front       102.4  {\ldots}
+177         four    hatchback          fwd           front       102.4  {\ldots}
+178          two    hatchback          rwd           front       102.9  {\ldots}
+179          two    hatchback          rwd           front       102.9  {\ldots}
+180         four        sedan          rwd           front       104.5  {\ldots}
+181         four        wagon          rwd           front       104.5  {\ldots}
+182          two        sedan          fwd           front        97.3  {\ldots}
+183          two        sedan          fwd           front        97.3  {\ldots}
+184         four        sedan          fwd           front        97.3  {\ldots}
+185         four        sedan          fwd           front        97.3  {\ldots}
+186         four        sedan          fwd           front        97.3  {\ldots}
+187         four        sedan          fwd           front        97.3  {\ldots}
+188         four        sedan          fwd           front        97.3  {\ldots}
+189          two  convertible          fwd           front        94.5  {\ldots}
+190          two    hatchback          fwd           front        94.5  {\ldots}
+191         four        sedan          fwd           front       100.4  {\ldots}
+192         four        sedan          fwd           front       100.4  {\ldots}
+193         four        wagon          fwd           front       100.4  {\ldots}
+194         four        sedan          rwd           front       104.3  {\ldots}
+195         four        wagon          rwd           front       104.3  {\ldots}
+196         four        sedan          rwd           front       104.3  {\ldots}
+197         four        wagon          rwd           front       104.3  {\ldots}
+198         four        sedan          rwd           front       104.3  {\ldots}
+199         four        wagon          rwd           front       104.3  {\ldots}
+200         four        sedan          rwd           front       109.1  {\ldots}
+201         four        sedan          rwd           front       109.1  {\ldots}
+202         four        sedan          rwd           front       109.1  {\ldots}
+203         four        sedan          rwd           front       109.1  {\ldots}
+204         four        sedan          rwd           front       109.1  {\ldots}
+
+     engine-size  fuel-system  bore  stroke compression-ratio horsepower  \textbackslash{}
+0            130         mpfi  3.47    2.68              9.00        111
+1            130         mpfi  3.47    2.68              9.00        111
+2            152         mpfi  2.68    3.47              9.00        154
+3            109         mpfi  3.19    3.40             10.00        102
+4            136         mpfi  3.19    3.40              8.00        115
+5            136         mpfi  3.19    3.40              8.50        110
+6            136         mpfi  3.19    3.40              8.50        110
+7            136         mpfi  3.19    3.40              8.50        110
+8            131         mpfi  3.13    3.40              8.30        140
+9            131         mpfi  3.13    3.40              7.00        160
+10           108         mpfi  3.50    2.80              8.80        101
+11           108         mpfi  3.50    2.80              8.80        101
+12           164         mpfi  3.31    3.19              9.00        121
+13           164         mpfi  3.31    3.19              9.00        121
+14           164         mpfi  3.31    3.19              9.00        121
+15           209         mpfi  3.62    3.39              8.00        182
+16           209         mpfi  3.62    3.39              8.00        182
+17           209         mpfi  3.62    3.39              8.00        182
+18            61         2bbl  2.91    3.03              9.50         48
+19            90         2bbl  3.03    3.11              9.60         70
+20            90         2bbl  3.03    3.11              9.60         70
+21            90         2bbl  2.97    3.23              9.41         68
+22            90         2bbl  2.97    3.23              9.40         68
+23            98         mpfi  3.03    3.39              7.60        102
+24            90         2bbl  2.97    3.23              9.40         68
+25            90         2bbl  2.97    3.23              9.40         68
+26            90         2bbl  2.97    3.23              9.40         68
+27            98         mpfi  3.03    3.39              7.60        102
+28           122         2bbl  3.34    3.46              8.50         88
+29           156          mfi  3.60    3.90              7.00        145
+..           {\ldots}          {\ldots}   {\ldots}     {\ldots}               {\ldots}        {\ldots}
+175          122         mpfi  3.31    3.54              8.70         92
+176          122         mpfi  3.31    3.54              8.70         92
+177          122         mpfi  3.31    3.54              8.70         92
+178          171         mpfi  3.27    3.35              9.30        161
+179          171         mpfi  3.27    3.35              9.30        161
+180          171         mpfi  3.27    3.35              9.20        156
+181          161         mpfi  3.27    3.35              9.20        156
+182           97          idi  3.01    3.40             23.00         52
+183          109         mpfi  3.19    3.40              9.00         85
+184           97          idi  3.01    3.40             23.00         52
+185          109         mpfi  3.19    3.40              9.00         85
+186          109         mpfi  3.19    3.40              9.00         85
+187           97          idi  3.01    3.40             23.00         68
+188          109         mpfi  3.19    3.40             10.00        100
+189          109         mpfi  3.19    3.40              8.50         90
+190          109         mpfi  3.19    3.40              8.50         90
+191          136         mpfi  3.19    3.40              8.50        110
+192           97          idi  3.01    3.40             23.00         68
+193          109         mpfi  3.19    3.40              9.00         88
+194          141         mpfi  3.78    3.15              9.50        114
+195          141         mpfi  3.78    3.15              9.50        114
+196          141         mpfi  3.78    3.15              9.50        114
+197          141         mpfi  3.78    3.15              9.50        114
+198          130         mpfi  3.62    3.15              7.50        162
+199          130         mpfi  3.62    3.15              7.50        162
+200          141         mpfi  3.78    3.15              9.50        114
+201          141         mpfi  3.78    3.15              8.70        160
+202          173         mpfi  3.58    2.87              8.80        134
+203          145          idi  3.01    3.40             23.00        106
+204          141         mpfi  3.78    3.15              9.50        114
+
+     peak-rpm city-mpg highway-mpg  price
+0        5000       21          27  13495
+1        5000       21          27  16500
+2        5000       19          26  16500
+3        5500       24          30  13950
+4        5500       18          22  17450
+5        5500       19          25  15250
+6        5500       19          25  17710
+7        5500       19          25  18920
+8        5500       17          20  23875
+9        5500       16          22      ?
+10       5800       23          29  16430
+11       5800       23          29  16925
+12       4250       21          28  20970
+13       4250       21          28  21105
+14       4250       20          25  24565
+15       5400       16          22  30760
+16       5400       16          22  41315
+17       5400       15          20  36880
+18       5100       47          53   5151
+19       5400       38          43   6295
+20       5400       38          43   6575
+21       5500       37          41   5572
+22       5500       31          38   6377
+23       5500       24          30   7957
+24       5500       31          38   6229
+25       5500       31          38   6692
+26       5500       31          38   7609
+27       5500       24          30   8558
+28       5000       24          30   8921
+29       5000       19          24  12964
+..        {\ldots}      {\ldots}         {\ldots}    {\ldots}
+175      4200       27          32   9988
+176      4200       27          32  10898
+177      4200       27          32  11248
+178      5200       20          24  16558
+179      5200       19          24  15998
+180      5200       20          24  15690
+181      5200       19          24  15750
+182      4800       37          46   7775
+183      5250       27          34   7975
+184      4800       37          46   7995
+185      5250       27          34   8195
+186      5250       27          34   8495
+187      4500       37          42   9495
+188      5500       26          32   9995
+189      5500       24          29  11595
+190      5500       24          29   9980
+191      5500       19          24  13295
+192      4500       33          38  13845
+193      5500       25          31  12290
+194      5400       23          28  12940
+195      5400       23          28  13415
+196      5400       24          28  15985
+197      5400       24          28  16515
+198      5100       17          22  18420
+199      5100       17          22  18950
+200      5400       23          28  16845
+201      5300       19          25  19045
+202      5500       18          23  21485
+203      4800       26          27  22470
+204      5400       19          25  22625
+
+[205 rows x 26 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Now, we have successfully read the raw dataset and add the correct
+headers into the data frame.
+
+    Question \#2:
+
+Find the name of the columns of the dataframe
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{10}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Write your code below and press Shift+Enter to execute }
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Index(['symboling', 'normalized-losses', 'make', 'fuel-type', 'aspiration',
+       'num-of-doors', 'body-style', 'drive-wheels', 'engine-location',
+       'wheel-base', 'length', 'width', 'height', 'curb-weight', 'engine-type',
+       'num-of-cylinders', 'engine-size', 'fuel-system', 'bore', 'stroke',
+       'compression-ratio', 'horsepower', 'peak-rpm', 'city-mpg',
+       'highway-mpg', 'price'],
+      dtype='object')
+\end{Verbatim}
+
+    Double-click here for the solution.
+
+    Save Dataset
+
+Correspondingly, Pandas enables us to save the dataset to csv by using
+the dataframe.to\_csv() method, you can add the file path and name along
+with quotation marks in the brackets.
+
+For example, if you would save the dataframe df as automobile.csv to
+your local machine, you may use the syntax below:
+df.to_csv("automobile.csv", index=False)
+    We can also read and save other file formats, we can use similar
+functions to \textbf{\texttt{pd.read\_csv()}} and
+\textbf{\texttt{df.to\_csv()}} for other data formats, the functions are
+listed in the following table:
+
+    Read/Save Other Data Formats
+
+\begin{longtable}[]{@{}lcr@{}}
+\toprule
+Data Formate & Read & Save\tabularnewline
+\midrule
+\endhead
+csv & \texttt{pd.read\_csv()} & \texttt{df.to\_csv()}\tabularnewline
+json & \texttt{pd.read\_json()} & \texttt{df.to\_json()}\tabularnewline
+excel & \texttt{pd.read\_excel()} &
+\texttt{df.to\_excel()}\tabularnewline
+hdf & \texttt{pd.read\_hdf()} & \texttt{df.to\_hdf()}\tabularnewline
+sql & \texttt{pd.read\_sql()} & \texttt{df.to\_sql()}\tabularnewline
+\ldots{} & \ldots{} & \ldots{}\tabularnewline
+\bottomrule
+\end{longtable}
+
+    Basic Insight of Dataset
+
+After reading data into Pandas dataframe, it is time for us to explore
+the dataset. There are several ways to obtain essential insights of the
+data to help us better understand our dataset.
+
+    Data Types
+
+Data has a variety of types. The main types stored in Pandas dataframes
+are object, float, int, bool and datetime64. In order to better learn
+about each attribute, it is always good for us to know the data type of
+each column. In Pandas:
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{11}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{dtypes}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{11}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+symboling              int64
+normalized-losses     object
+make                  object
+fuel-type             object
+aspiration            object
+num-of-doors          object
+body-style            object
+drive-wheels          object
+engine-location       object
+wheel-base           float64
+length               float64
+width                float64
+height               float64
+curb-weight            int64
+engine-type           object
+num-of-cylinders      object
+engine-size            int64
+fuel-system           object
+bore                  object
+stroke                object
+compression-ratio    float64
+horsepower            object
+peak-rpm              object
+city-mpg               int64
+highway-mpg            int64
+price                 object
+dtype: object
+\end{Verbatim}
+\end{tcolorbox}
+        
+    returns a Series with the data type of each column.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{12}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} check the data type of data frame \PYZdq{}df\PYZdq{} by .dtypes}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{dtypes}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+symboling              int64
+normalized-losses     object
+make                  object
+fuel-type             object
+aspiration            object
+num-of-doors          object
+body-style            object
+drive-wheels          object
+engine-location       object
+wheel-base           float64
+length               float64
+width                float64
+height               float64
+curb-weight            int64
+engine-type           object
+num-of-cylinders      object
+engine-size            int64
+fuel-system           object
+bore                  object
+stroke                object
+compression-ratio    float64
+horsepower            object
+peak-rpm              object
+city-mpg               int64
+highway-mpg            int64
+price                 object
+dtype: object
+\end{Verbatim}
+
+    As a result, as shown above, it is clear to see that the data type of
+``symboling'' and ``curb-weight'' are int64, ``normalized-losses'' is
+object, and ``wheel-base'' is float64, etc.
+
+These data types can be changed; we will learn how to accomplish this in
+a later module.
+
+    Describe
+
+If we would like to get a statistical summary of each column, such as
+count, column mean value, column standard deviation, etc. We use the
+describe method:
+dataframe.describe()
+    This method will provide various summary statistics, excluding NaN (Not
+a Number) values.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{13}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{13}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+        symboling  wheel-base      length       width      height  \textbackslash{}
+count  205.000000  205.000000  205.000000  205.000000  205.000000
+mean     0.834146   98.756585  174.049268   65.907805   53.724878
+std      1.245307    6.021776   12.337289    2.145204    2.443522
+min     -2.000000   86.600000  141.100000   60.300000   47.800000
+25\%      0.000000   94.500000  166.300000   64.100000   52.000000
+50\%      1.000000   97.000000  173.200000   65.500000   54.100000
+75\%      2.000000  102.400000  183.100000   66.900000   55.500000
+max      3.000000  120.900000  208.100000   72.300000   59.800000
+
+       curb-weight  engine-size  compression-ratio    city-mpg  highway-mpg
+count   205.000000   205.000000         205.000000  205.000000   205.000000
+mean   2555.565854   126.907317          10.142537   25.219512    30.751220
+std     520.680204    41.642693           3.972040    6.542142     6.886443
+min    1488.000000    61.000000           7.000000   13.000000    16.000000
+25\%    2145.000000    97.000000           8.600000   19.000000    25.000000
+50\%    2414.000000   120.000000           9.000000   24.000000    30.000000
+75\%    2935.000000   141.000000           9.400000   30.000000    34.000000
+max    4066.000000   326.000000          23.000000   49.000000    54.000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    This shows the statistical summary of all numeric-typed (int, float)
+columns. For example, the attribute ``symboling'' has 205 counts, the
+mean value of this column is 0.83, the standard deviation is 1.25, the
+minimum value is -2, 25th percentile is 0, 50th percentile is 1, 75th
+percentile is 2, and the maximum value is 3. However, what if we would
+also like to check all the columns including those that are of type
+object.
+
+You can add an argument include = ``all'' inside the bracket. Let's try
+it again.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{14}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} describe all the columns in \PYZdq{}df\PYZdq{} }
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{n}{include} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{all}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{14}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+         symboling normalized-losses    make fuel-type aspiration  \textbackslash{}
+count   205.000000               205     205       205        205
+unique         NaN                52      22         2          2
+top            NaN                 ?  toyota       gas        std
+freq           NaN                41      32       185        168
+mean      0.834146               NaN     NaN       NaN        NaN
+std       1.245307               NaN     NaN       NaN        NaN
+min      -2.000000               NaN     NaN       NaN        NaN
+25\%       0.000000               NaN     NaN       NaN        NaN
+50\%       1.000000               NaN     NaN       NaN        NaN
+75\%       2.000000               NaN     NaN       NaN        NaN
+max       3.000000               NaN     NaN       NaN        NaN
+
+       num-of-doors body-style drive-wheels engine-location  wheel-base  {\ldots}  \textbackslash{}
+count           205        205          205             205  205.000000  {\ldots}
+unique            3          5            3               2         NaN  {\ldots}
+top            four      sedan          fwd           front         NaN  {\ldots}
+freq            114         96          120             202         NaN  {\ldots}
+mean            NaN        NaN          NaN             NaN   98.756585  {\ldots}
+std             NaN        NaN          NaN             NaN    6.021776  {\ldots}
+min             NaN        NaN          NaN             NaN   86.600000  {\ldots}
+25\%             NaN        NaN          NaN             NaN   94.500000  {\ldots}
+50\%             NaN        NaN          NaN             NaN   97.000000  {\ldots}
+75\%             NaN        NaN          NaN             NaN  102.400000  {\ldots}
+max             NaN        NaN          NaN             NaN  120.900000  {\ldots}
+
+        engine-size  fuel-system  bore  stroke compression-ratio horsepower  \textbackslash{}
+count    205.000000          205   205     205        205.000000        205
+unique          NaN            8    39      37               NaN         60
+top             NaN         mpfi  3.62    3.40               NaN         68
+freq            NaN           94    23      20               NaN         19
+mean     126.907317          NaN   NaN     NaN         10.142537        NaN
+std       41.642693          NaN   NaN     NaN          3.972040        NaN
+min       61.000000          NaN   NaN     NaN          7.000000        NaN
+25\%       97.000000          NaN   NaN     NaN          8.600000        NaN
+50\%      120.000000          NaN   NaN     NaN          9.000000        NaN
+75\%      141.000000          NaN   NaN     NaN          9.400000        NaN
+max      326.000000          NaN   NaN     NaN         23.000000        NaN
+
+        peak-rpm    city-mpg highway-mpg price
+count        205  205.000000  205.000000   205
+unique        24         NaN         NaN   187
+top         5500         NaN         NaN     ?
+freq          37         NaN         NaN     4
+mean         NaN   25.219512   30.751220   NaN
+std          NaN    6.542142    6.886443   NaN
+min          NaN   13.000000   16.000000   NaN
+25\%          NaN   19.000000   25.000000   NaN
+50\%          NaN   24.000000   30.000000   NaN
+75\%          NaN   30.000000   34.000000   NaN
+max          NaN   49.000000   54.000000   NaN
+
+[11 rows x 26 columns]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Now, it provides the statistical summary of all the columns, including
+object-typed attributes. We can now see how many unique values, which is
+the top value and the frequency of top value in the object-typed
+columns. Some values in the table above show as ``NaN'', this is because
+those numbers are not available regarding a particular column type.
+
+    Question \#3:
+
+You can select the columns of a data frame by indicating the name of
+each column, for example, you can select the three columns as follows:
+
+dataframe{[}{[}' column 1 `,column 2', `column 3'{]}{]}
+
+Where ``column'' is the name of the column, you can apply the method
+``.describe()'' to get the statistics of those columns as follows:
+
+dataframe{[}{[}' column 1 `,column 2', `column 3'{]} {]}.describe()
+
+Apply the method to ``.describe()'' to the columns `length' and
+`compression-ratio'.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{18}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Write your code below and press Shift+Enter to execute }
+
+\PY{n}{df}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{length}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{compression\PYZhy{}ratio}\PY{l+s+s1}{\PYZsq{}} \PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{18}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+           length  compression-ratio
+count  205.000000         205.000000
+mean   174.049268          10.142537
+std     12.337289           3.972040
+min    141.100000           7.000000
+25\%    166.300000           8.600000
+50\%    173.200000           9.000000
+75\%    183.100000           9.400000
+max    208.100000          23.000000
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Double-click here for the solution.
+
+    Info
+
+Another method you can use to check your dataset is:
+dataframe.info
+    It provide a concise summary of your DataFrame.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{19}{\hspace{4pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} look at the info of \PYZdq{}df\PYZdq{}}
+\PY{n}{df}\PY{o}{.}\PY{n}{info}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{19}{\hspace{3.5pt}}
+\begin{Verbatim}[commandchars=\\\{\}]
+<bound method DataFrame.info of      symboling normalized-losses         make
+fuel-type aspiration  \textbackslash{}
+0            3                 ?  alfa-romero       gas        std
+1            3                 ?  alfa-romero       gas        std
+2            1                 ?  alfa-romero       gas        std
+3            2               164         audi       gas        std
+4            2               164         audi       gas        std
+5            2                 ?         audi       gas        std
+6            1               158         audi       gas        std
+7            1                 ?         audi       gas        std
+8            1               158         audi       gas      turbo
+9            0                 ?         audi       gas      turbo
+10           2               192          bmw       gas        std
+11           0               192          bmw       gas        std
+12           0               188          bmw       gas        std
+13           0               188          bmw       gas        std
+14           1                 ?          bmw       gas        std
+15           0                 ?          bmw       gas        std
+16           0                 ?          bmw       gas        std
+17           0                 ?          bmw       gas        std
+18           2               121    chevrolet       gas        std
+19           1                98    chevrolet       gas        std
+20           0                81    chevrolet       gas        std
+21           1               118        dodge       gas        std
+22           1               118        dodge       gas        std
+23           1               118        dodge       gas      turbo
+24           1               148        dodge       gas        std
+25           1               148        dodge       gas        std
+26           1               148        dodge       gas        std
+27           1               148        dodge       gas      turbo
+28          -1               110        dodge       gas        std
+29           3               145        dodge       gas      turbo
+..         {\ldots}               {\ldots}          {\ldots}       {\ldots}        {\ldots}
+175         -1                65       toyota       gas        std
+176         -1                65       toyota       gas        std
+177         -1                65       toyota       gas        std
+178          3               197       toyota       gas        std
+179          3               197       toyota       gas        std
+180         -1                90       toyota       gas        std
+181         -1                 ?       toyota       gas        std
+182          2               122   volkswagen    diesel        std
+183          2               122   volkswagen       gas        std
+184          2                94   volkswagen    diesel        std
+185          2                94   volkswagen       gas        std
+186          2                94   volkswagen       gas        std
+187          2                94   volkswagen    diesel      turbo
+188          2                94   volkswagen       gas        std
+189          3                 ?   volkswagen       gas        std
+190          3               256   volkswagen       gas        std
+191          0                 ?   volkswagen       gas        std
+192          0                 ?   volkswagen    diesel      turbo
+193          0                 ?   volkswagen       gas        std
+194         -2               103        volvo       gas        std
+195         -1                74        volvo       gas        std
+196         -2               103        volvo       gas        std
+197         -1                74        volvo       gas        std
+198         -2               103        volvo       gas      turbo
+199         -1                74        volvo       gas      turbo
+200         -1                95        volvo       gas        std
+201         -1                95        volvo       gas      turbo
+202         -1                95        volvo       gas        std
+203         -1                95        volvo    diesel      turbo
+204         -1                95        volvo       gas      turbo
+
+    num-of-doors   body-style drive-wheels engine-location  wheel-base  {\ldots}  \textbackslash{}
+0            two  convertible          rwd           front        88.6  {\ldots}
+1            two  convertible          rwd           front        88.6  {\ldots}
+2            two    hatchback          rwd           front        94.5  {\ldots}
+3           four        sedan          fwd           front        99.8  {\ldots}
+4           four        sedan          4wd           front        99.4  {\ldots}
+5            two        sedan          fwd           front        99.8  {\ldots}
+6           four        sedan          fwd           front       105.8  {\ldots}
+7           four        wagon          fwd           front       105.8  {\ldots}
+8           four        sedan          fwd           front       105.8  {\ldots}
+9            two    hatchback          4wd           front        99.5  {\ldots}
+10           two        sedan          rwd           front       101.2  {\ldots}
+11          four        sedan          rwd           front       101.2  {\ldots}
+12           two        sedan          rwd           front       101.2  {\ldots}
+13          four        sedan          rwd           front       101.2  {\ldots}
+14          four        sedan          rwd           front       103.5  {\ldots}
+15          four        sedan          rwd           front       103.5  {\ldots}
+16           two        sedan          rwd           front       103.5  {\ldots}
+17          four        sedan          rwd           front       110.0  {\ldots}
+18           two    hatchback          fwd           front        88.4  {\ldots}
+19           two    hatchback          fwd           front        94.5  {\ldots}
+20          four        sedan          fwd           front        94.5  {\ldots}
+21           two    hatchback          fwd           front        93.7  {\ldots}
+22           two    hatchback          fwd           front        93.7  {\ldots}
+23           two    hatchback          fwd           front        93.7  {\ldots}
+24          four    hatchback          fwd           front        93.7  {\ldots}
+25          four        sedan          fwd           front        93.7  {\ldots}
+26          four        sedan          fwd           front        93.7  {\ldots}
+27             ?        sedan          fwd           front        93.7  {\ldots}
+28          four        wagon          fwd           front       103.3  {\ldots}
+29           two    hatchback          fwd           front        95.9  {\ldots}
+..           {\ldots}          {\ldots}          {\ldots}             {\ldots}         {\ldots}  {\ldots}
+175         four    hatchback          fwd           front       102.4  {\ldots}
+176         four        sedan          fwd           front       102.4  {\ldots}
+177         four    hatchback          fwd           front       102.4  {\ldots}
+178          two    hatchback          rwd           front       102.9  {\ldots}
+179          two    hatchback          rwd           front       102.9  {\ldots}
+180         four        sedan          rwd           front       104.5  {\ldots}
+181         four        wagon          rwd           front       104.5  {\ldots}
+182          two        sedan          fwd           front        97.3  {\ldots}
+183          two        sedan          fwd           front        97.3  {\ldots}
+184         four        sedan          fwd           front        97.3  {\ldots}
+185         four        sedan          fwd           front        97.3  {\ldots}
+186         four        sedan          fwd           front        97.3  {\ldots}
+187         four        sedan          fwd           front        97.3  {\ldots}
+188         four        sedan          fwd           front        97.3  {\ldots}
+189          two  convertible          fwd           front        94.5  {\ldots}
+190          two    hatchback          fwd           front        94.5  {\ldots}
+191         four        sedan          fwd           front       100.4  {\ldots}
+192         four        sedan          fwd           front       100.4  {\ldots}
+193         four        wagon          fwd           front       100.4  {\ldots}
+194         four        sedan          rwd           front       104.3  {\ldots}
+195         four        wagon          rwd           front       104.3  {\ldots}
+196         four        sedan          rwd           front       104.3  {\ldots}
+197         four        wagon          rwd           front       104.3  {\ldots}
+198         four        sedan          rwd           front       104.3  {\ldots}
+199         four        wagon          rwd           front       104.3  {\ldots}
+200         four        sedan          rwd           front       109.1  {\ldots}
+201         four        sedan          rwd           front       109.1  {\ldots}
+202         four        sedan          rwd           front       109.1  {\ldots}
+203         four        sedan          rwd           front       109.1  {\ldots}
+204         four        sedan          rwd           front       109.1  {\ldots}
+
+     engine-size  fuel-system  bore  stroke compression-ratio horsepower  \textbackslash{}
+0            130         mpfi  3.47    2.68              9.00        111
+1            130         mpfi  3.47    2.68              9.00        111
+2            152         mpfi  2.68    3.47              9.00        154
+3            109         mpfi  3.19    3.40             10.00        102
+4            136         mpfi  3.19    3.40              8.00        115
+5            136         mpfi  3.19    3.40              8.50        110
+6            136         mpfi  3.19    3.40              8.50        110
+7            136         mpfi  3.19    3.40              8.50        110
+8            131         mpfi  3.13    3.40              8.30        140
+9            131         mpfi  3.13    3.40              7.00        160
+10           108         mpfi  3.50    2.80              8.80        101
+11           108         mpfi  3.50    2.80              8.80        101
+12           164         mpfi  3.31    3.19              9.00        121
+13           164         mpfi  3.31    3.19              9.00        121
+14           164         mpfi  3.31    3.19              9.00        121
+15           209         mpfi  3.62    3.39              8.00        182
+16           209         mpfi  3.62    3.39              8.00        182
+17           209         mpfi  3.62    3.39              8.00        182
+18            61         2bbl  2.91    3.03              9.50         48
+19            90         2bbl  3.03    3.11              9.60         70
+20            90         2bbl  3.03    3.11              9.60         70
+21            90         2bbl  2.97    3.23              9.41         68
+22            90         2bbl  2.97    3.23              9.40         68
+23            98         mpfi  3.03    3.39              7.60        102
+24            90         2bbl  2.97    3.23              9.40         68
+25            90         2bbl  2.97    3.23              9.40         68
+26            90         2bbl  2.97    3.23              9.40         68
+27            98         mpfi  3.03    3.39              7.60        102
+28           122         2bbl  3.34    3.46              8.50         88
+29           156          mfi  3.60    3.90              7.00        145
+..           {\ldots}          {\ldots}   {\ldots}     {\ldots}               {\ldots}        {\ldots}
+175          122         mpfi  3.31    3.54              8.70         92
+176          122         mpfi  3.31    3.54              8.70         92
+177          122         mpfi  3.31    3.54              8.70         92
+178          171         mpfi  3.27    3.35              9.30        161
+179          171         mpfi  3.27    3.35              9.30        161
+180          171         mpfi  3.27    3.35              9.20        156
+181          161         mpfi  3.27    3.35              9.20        156
+182           97          idi  3.01    3.40             23.00         52
+183          109         mpfi  3.19    3.40              9.00         85
+184           97          idi  3.01    3.40             23.00         52
+185          109         mpfi  3.19    3.40              9.00         85
+186          109         mpfi  3.19    3.40              9.00         85
+187           97          idi  3.01    3.40             23.00         68
+188          109         mpfi  3.19    3.40             10.00        100
+189          109         mpfi  3.19    3.40              8.50         90
+190          109         mpfi  3.19    3.40              8.50         90
+191          136         mpfi  3.19    3.40              8.50        110
+192           97          idi  3.01    3.40             23.00         68
+193          109         mpfi  3.19    3.40              9.00         88
+194          141         mpfi  3.78    3.15              9.50        114
+195          141         mpfi  3.78    3.15              9.50        114
+196          141         mpfi  3.78    3.15              9.50        114
+197          141         mpfi  3.78    3.15              9.50        114
+198          130         mpfi  3.62    3.15              7.50        162
+199          130         mpfi  3.62    3.15              7.50        162
+200          141         mpfi  3.78    3.15              9.50        114
+201          141         mpfi  3.78    3.15              8.70        160
+202          173         mpfi  3.58    2.87              8.80        134
+203          145          idi  3.01    3.40             23.00        106
+204          141         mpfi  3.78    3.15              9.50        114
+
+     peak-rpm city-mpg highway-mpg  price
+0        5000       21          27  13495
+1        5000       21          27  16500
+2        5000       19          26  16500
+3        5500       24          30  13950
+4        5500       18          22  17450
+5        5500       19          25  15250
+6        5500       19          25  17710
+7        5500       19          25  18920
+8        5500       17          20  23875
+9        5500       16          22      ?
+10       5800       23          29  16430
+11       5800       23          29  16925
+12       4250       21          28  20970
+13       4250       21          28  21105
+14       4250       20          25  24565
+15       5400       16          22  30760
+16       5400       16          22  41315
+17       5400       15          20  36880
+18       5100       47          53   5151
+19       5400       38          43   6295
+20       5400       38          43   6575
+21       5500       37          41   5572
+22       5500       31          38   6377
+23       5500       24          30   7957
+24       5500       31          38   6229
+25       5500       31          38   6692
+26       5500       31          38   7609
+27       5500       24          30   8558
+28       5000       24          30   8921
+29       5000       19          24  12964
+..        {\ldots}      {\ldots}         {\ldots}    {\ldots}
+175      4200       27          32   9988
+176      4200       27          32  10898
+177      4200       27          32  11248
+178      5200       20          24  16558
+179      5200       19          24  15998
+180      5200       20          24  15690
+181      5200       19          24  15750
+182      4800       37          46   7775
+183      5250       27          34   7975
+184      4800       37          46   7995
+185      5250       27          34   8195
+186      5250       27          34   8495
+187      4500       37          42   9495
+188      5500       26          32   9995
+189      5500       24          29  11595
+190      5500       24          29   9980
+191      5500       19          24  13295
+192      4500       33          38  13845
+193      5500       25          31  12290
+194      5400       23          28  12940
+195      5400       23          28  13415
+196      5400       24          28  15985
+197      5400       24          28  16515
+198      5100       17          22  18420
+199      5100       17          22  18950
+200      5400       23          28  16845
+201      5300       19          25  19045
+202      5500       18          23  21485
+203      4800       26          27  22470
+204      5400       19          25  22625
+
+[205 rows x 26 columns]>
+\end{Verbatim}
+\end{tcolorbox}
+        
+    Here we are able to see the information of our dataframe, with the top
+30 rows and the bottom 30 rows. And, it also shows us the whole data
+frame has 205 rows and 26 columns in total.
+
+    Excellent! You have just completed the Introduction Notebook!
+
+    \begin{verbatim}
+<p><a href="https://cocl.us/DA0101EN_NotbookLink_Top_bottom"><img src="https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/DA0101EN/Images/BottomAd.png" width="750" align="center"></a></p>
+\end{verbatim}
+
+    About the Authors:
+
+This notebook was written by Mahdi Noorian PhD, Joseph Santarcangelo,
+Bahare Talayian, Eric Xiao, Steven Dong, Parizad, Hima Vsudevan and
+Fiorella Wenver and Yi Yao.
+
+Joseph Santarcangelo is a Data Scientist at IBM, and holds a PhD in
+Electrical Engineering. His research focused on using Machine Learning,
+Signal Processing, and Computer Vision to determine how videos impact
+human cognition. Joseph has been working for IBM since he completed his
+PhD.
+
+    Copyright © 2018 IBM Developer Skills Network. This notebook and its
+source code are released under the terms of the MIT License.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
